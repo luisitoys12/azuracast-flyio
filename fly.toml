@@ -1,17 +1,9 @@
-# fly.toml - AzuraCast on Fly.io
-# EstacionKusMediaos
+# fly.toml - AzuraCast on Fly.io | EstacionKusMediaos
+app = 'azuracast-kusmediao'
+primary_region = 'dal'
 
-app = 'azencast-kusmediaos'  # Cambia por tu app name en Fly.io
-primary_region = 'dal'  # Dallas - mas cercano a Mexico
-
-[kind]
-  type = 'docker'
-  image = 'ghcr.io/azuracast/azencast:latest'
-
-[shared_ipv6]
-  auto_stop_machines = true
-  auto_start_machines = true
-  min_machines_running = 1  # mantener siempre activo
+[build]
+  image = 'ghcr.io/luisitoys12/azuracast-flyio:main'
 
 [http_service]
   internal_port = 80
@@ -23,23 +15,20 @@ primary_region = 'dal'  # Dallas - mas cercano a Mexico
 [[vm]]
   cpu_kind = 'shared'
   cpus = 2
-  memory_mb = 2048  # 2GB - recomendado para AzuraCast
+  memory_mb = 2048
 
 [[mounts]]
   source = 'azuracast_data'
-  destination = '/var/azencast'
+  destination = '/var/azuracast'
 
-# Puertos adicionales para streaming
 [[services]]
   protocol = 'tcp'
   internal_port = 8000
-
   [[services.ports]]
     port = 8000
 
 [[services]]
   protocol = 'tcp'
   internal_port = 8090
-
   [[services.ports]]
     port = 8090
