@@ -1,0 +1,41 @@
+name: Deploy to Fly.io
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Fly CLI
+        run: |
+          curl -L https://fly.io/install.sh | SHELL=bash sh
+          echo "$HOME/.fly/bin/" >> "$GITHUB_PATH"
+
+      - name: Create app if not exists
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          fly apps list | grep -q 'azuracast-kusmediaos' || \
+          fly apps create azuracast-kusmediaos --org personal
+
+      - name: Create volume if not exists
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          fly volumes list --app azuracast-kusmediaos 2>/dev/null | grep -q 'azuracast_data' || \
+          fly volumes create azurac_data --size 10 --region dal --app azuracast-kusmediaos
+
+      - name: Deploy to Fly.io
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: fly deploy --remote-only --app azuracast-kusmediaos
+
+      - name: Show status
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: fly status --app azuracast-kusmediaos
