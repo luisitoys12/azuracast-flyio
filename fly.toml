@@ -1,5 +1,5 @@
 app = "azuracast-flyio"
-primary_region = "mia"
+primary_region = "iad"
 
 [build]
   image = "ghcr.io/azuracast/azuracast:latest"
@@ -31,7 +31,8 @@ primary_region = "mia"
 [[mounts]]
   source = "azuracast_data"
   destination = "/var/azuracast"
+  size_gb = 20
 
 [machines]
-  memory = "2048"
-  cpus = 2
+  memory = "4096"
+  cpus = 4
