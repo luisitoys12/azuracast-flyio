@@ -1,4 +1,6 @@
 # fly.toml - AzuraCast on Fly.io | EstacionKusMediaos
+# Generado para: luisitoys12/azuracast-flyio
+
 app = 'azuracast-kusmediao'
 primary_region = 'dal'
 
@@ -21,14 +23,18 @@ primary_region = 'dal'
   source = 'azuracast_data'
   destination = '/var/azuracast'
 
+# Puerto streaming Icecast/Liquidsoap
 [[services]]
   protocol = 'tcp'
   internal_port = 8000
+
   [[services.ports]]
     port = 8000
 
+# Puerto admin stats
 [[services]]
   protocol = 'tcp'
   internal_port = 8090
+
   [[services.ports]]
     port = 8090
