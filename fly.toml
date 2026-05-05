@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for azuracast-flyio on 2026-04-21T21:34:46Z
+# fly.toml app configuration file generated for azuracast-flyio-mc6m4g on 2026-05-05T17:20:43Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'azuracast-flyio'
-primary_region = 'iad'
+app = 'azuracast-flyio-mc6m4g'
+primary_region = 'dfw'
 
 [build]
 
@@ -13,7 +13,7 @@ primary_region = 'iad'
   destination = '/var/azuracast'
 
 [http_service]
-  internal_port = 80
+  internal_port = 8080
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
