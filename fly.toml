@@ -1,11 +1,10 @@
 # fly.toml - AzuraCast on Fly.io
-# Usando imagen directa sin Dockerfile para evitar problemas de entrypoint
 
 app = 'azuracast-flyio'
 primary_region = 'iad'
 
 [build]
-  image = "ghcr.io/azuracast/azuracast:latest"
+  dockerfile = "Dockerfile"
 
 [[mounts]]
   source = 'azuracast'
