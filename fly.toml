@@ -1,16 +1,18 @@
 # fly.toml - AzuraCast on Fly.io
-# Fixed: memory 2GB, ports 8000/8443, auto_stop off
+# VM: performance-2x (2 CPUs, 4GB RAM)
+# Ports: 80/443 web, 8000/8443 stream, 2022 SFTP
 
 app = 'azuracast-flyio'
 primary_region = 'iad'
 
 [build]
+  dockerfile = "Dockerfile"
 
 [[mounts]]
   source = 'azuracast'
   destination = '/var/azuracast'
 
-# Puerto web (80 -> 443)
+# Puerto web
 [[services]]
   internal_port = 80
   protocol = "tcp"
@@ -29,7 +31,7 @@ primary_region = 'iad'
     hard_limit = 100
     soft_limit = 80
 
-# Puerto stream Icecast HTTP
+# Stream Icecast HTTP
 [[services]]
   internal_port = 8000
   protocol = "tcp"
@@ -37,7 +39,7 @@ primary_region = 'iad'
   [[services.ports]]
     port = 8000
 
-# Puerto stream Icecast HTTPS
+# Stream Icecast HTTPS
 [[services]]
   internal_port = 8443
   protocol = "tcp"
@@ -45,7 +47,7 @@ primary_region = 'iad'
   [[services.ports]]
     port = 8443
 
-# SFTP para subir archivos de música
+# SFTP
 [[services]]
   internal_port = 2022
   protocol = "tcp"
@@ -54,7 +56,6 @@ primary_region = 'iad'
     port = 2022
 
 [[vm]]
-  memory = '2gb'
-  cpu_kind = 'shared'
-  cpus = 2
-  memory_mb = 2048
+  size = 'performance-2x'
+  memory = '4gb'
+  memory_mb = 4096
