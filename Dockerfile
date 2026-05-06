@@ -1,17 +1,19 @@
 FROM ghcr.io/azuracast/azuracast:latest
 
-# Instalar tini explicitamente para que Fly.io pueda arrancar el proceso
-# AzuraCast usa: tini -- /usr/local/bin/my_init --no-main-command
+# Instalar tini en la ruta exacta que Fly.io busca
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends tini && \
+    ln -sf /usr/bin/tini /tini && \
+    chmod +x /usr/bin/tini && \
     rm -rf /var/lib/apt/lists/*
 
-# Verificar que my_init existe
-RUN test -f /usr/local/bin/my_init || (echo 'ERROR: my_init not found' && exit 1)
+# Verificar rutas criticas
+RUN ls -la /usr/bin/tini && ls -la /usr/local/bin/my_init
 
 EXPOSE 80 443 8000 8443 2022
 
 VOLUME ["/var/azuracast"]
 
-ENTRYPOINT ["/usr/bin/tini", "--"]
+# Sobreescribir entrypoint completamente - no usar tini como wrapper
+ENTRYPOINT []
 CMD ["/usr/local/bin/my_init", "--no-main-command"]

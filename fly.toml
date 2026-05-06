@@ -1,12 +1,15 @@
 # fly.toml - AzuraCast on Fly.io
 # VM: performance-2x (2 CPUs, 4GB RAM)
-# Ports: 80/443 web, 8000/8443 stream, 2022 SFTP
 
 app = 'azuracast-flyio'
 primary_region = 'iad'
 
 [build]
   dockerfile = "Dockerfile"
+
+# Sobrescribir el comando de inicio directamente
+[processes]
+  app = "/usr/local/bin/my_init --no-main-command"
 
 [[mounts]]
   source = 'azuracast'
