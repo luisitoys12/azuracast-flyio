@@ -26,6 +26,9 @@ primary_region = 'iad'
     hard_limit = 100
     soft_limit = 80
 
+  [services.machine_checks]
+    enabled = false
+
 [[services]]
   internal_port = 8000
   protocol = "tcp"
@@ -48,6 +51,6 @@ primary_region = 'iad'
     port = 2022
 
 [[vm]]
-  size = 'performance-2x'
-  memory = '4gb'
-  memory_mb = 4096
+  memory = '2048mb'
+  cpus = 2
+  cpu_kind = 'shared'
