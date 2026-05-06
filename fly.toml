@@ -1,24 +1,19 @@
 # fly.toml - AzuraCast on Fly.io
-# VM: performance-2x (2 CPUs, 4GB RAM)
+# Usando imagen directa sin Dockerfile para evitar problemas de entrypoint
 
 app = 'azuracast-flyio'
 primary_region = 'iad'
 
 [build]
-  dockerfile = "Dockerfile"
-
-[processes]
-  app = "/usr/local/bin/my_init --no-main-command"
+  image = "ghcr.io/azuracast/azuracast:latest"
 
 [[mounts]]
   source = 'azuracast'
   destination = '/var/azuracast'
 
-# Puerto web
 [[services]]
   internal_port = 80
   protocol = "tcp"
-  processes = ['app']
 
   [[services.ports]]
     port = 80
@@ -34,29 +29,23 @@ primary_region = 'iad'
     hard_limit = 100
     soft_limit = 80
 
-# Stream Icecast HTTP
 [[services]]
   internal_port = 8000
   protocol = "tcp"
-  processes = ['app']
 
   [[services.ports]]
     port = 8000
 
-# Stream Icecast HTTPS
 [[services]]
   internal_port = 8443
   protocol = "tcp"
-  processes = ['app']
 
   [[services.ports]]
     port = 8443
 
-# SFTP
 [[services]]
   internal_port = 2022
   protocol = "tcp"
-  processes = ['app']
 
   [[services.ports]]
     port = 2022

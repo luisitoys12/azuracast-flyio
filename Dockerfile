@@ -1,19 +1,9 @@
-FROM ghcr.io/azuracast/azuracast:latest
+# Dockerfile mantenido como referencia pero no se usa en el deploy
+# El fly.toml apunta directamente a la imagen ghcr.io/azuracast/azuracast:latest
+# usando [build] image = "..."
 
-# Instalar tini en la ruta exacta que Fly.io busca
-RUN apt-get update -qq && \
-    apt-get install -y --no-install-recommends tini && \
-    ln -sf /usr/bin/tini /tini && \
-    chmod +x /usr/bin/tini && \
-    rm -rf /var/lib/apt/lists/*
-
-# Verificar rutas criticas
-RUN ls -la /usr/bin/tini && ls -la /usr/local/bin/my_init
-
-EXPOSE 80 443 8000 8443 2022
-
-VOLUME ["/var/azuracast"]
-
-# Sobreescribir entrypoint completamente - no usar tini como wrapper
-ENTRYPOINT []
-CMD ["/usr/local/bin/my_init", "--no-main-command"]
+# Si necesitas customizar en el futuro, descomenta y ajusta:
+# FROM ghcr.io/azuracast/azuracast:latest
+# RUN apt-get update && apt-get install -y tini
+# EXPOSE 80 443 8000 8443 2022
+# VOLUME ["/var/azuracast"]
