@@ -4,17 +4,16 @@ primary_region = 'iad'
 [build]
   dockerfile = "Dockerfile"
 
-[processes]
-  app = "/usr/local/bin/my_init --no-main-command"
-
 [[mounts]]
   source = 'azuracast'
   destination = '/var/azuracast'
 
+[experimental]
+  entrypoint = ["/usr/local/bin/my_init", "--no-main-command"]
+
 [[services]]
   internal_port = 80
   protocol = "tcp"
-  processes = ["app"]
 
   [[services.ports]]
     port = 80
@@ -33,7 +32,6 @@ primary_region = 'iad'
 [[services]]
   internal_port = 8000
   protocol = "tcp"
-  processes = ["app"]
 
   [[services.ports]]
     port = 8000
@@ -41,7 +39,6 @@ primary_region = 'iad'
 [[services]]
   internal_port = 8443
   protocol = "tcp"
-  processes = ["app"]
 
   [[services.ports]]
     port = 8443
@@ -49,7 +46,6 @@ primary_region = 'iad'
 [[services]]
   internal_port = 2022
   protocol = "tcp"
-  processes = ["app"]
 
   [[services.ports]]
     port = 2022
