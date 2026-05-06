@@ -26,9 +26,6 @@ primary_region = 'iad'
     hard_limit = 100
     soft_limit = 80
 
-  [services.machine_checks]
-    enabled = false
-
 [[services]]
   internal_port = 8000
   protocol = "tcp"
