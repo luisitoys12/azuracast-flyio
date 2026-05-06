@@ -1,5 +1,3 @@
-# fly.toml - AzuraCast on Fly.io
-
 app = 'azuracast-flyio'
 primary_region = 'iad'
 
